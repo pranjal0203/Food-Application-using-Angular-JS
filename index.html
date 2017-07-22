@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
 
 <head>
     <meta charset="UTF-8">
@@ -8,22 +8,48 @@
     <title>Foodie</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="main.css">
+    <script src="angular.min.js"></script>
+
+    <style>
+        input.ng-invalid.ng-touched {
+          border:1px solid red;
+          background-color: #FC7E73 ;
+        }
+
+        input.ng-valid{
+          border:2px solid green;
+          background-color: #CBFC90 ;
+          border-radius: 25px
+        }
+
+    </style>
 </head>
 
 <body id="app">
     <div class="login">
         <div class="login-form">
             <h3> Login </h3>
-            <form>
+            <form name="loginform">
+                  <div class="form-group">
+                      <label for="user-name">Name</label>
+                      <input type="text" class="form-control" id="user-name" placeholder="Name" name ="name" ng-model="user.name" required>
+                      <div ng-show="loginform.name.$error.required">Required!</div>
+                      <div ng-show="loginform.name.$error.name">This doesn't look like a valid email</div>
+                  </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="user-email" placeholder="Email">
+                    <label for="user-email">Email address</label>
+                    <input type="email" class="form-control" id="user-email" placeholder="Email" name="email" ng-model="user.email" required>
+                    <div ng-show="loginform.email.$error.required">Required!</div>
+                    <div ng-show="loginform.email.$error.email">This doesn't look like a valid email</div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="user-password" placeholder="Password">
+                    <label for="user-password">Password</label>
+                    <input type="password" class="form-control" id="user-password" placeholder="Password" name="password" ng-model="user.password" required>
+                    <div ng-show="loginform.password.$error.required">Required!</div>
+                    <div ng-show="loginform.password.$error.password">This doesn't look like a valid email</div>
                 </div>
                 <div type="submit" class="btn btn-default">Login</div>
+                <div class='welcome-message'>Welcome Back {{user.name}}</div>
             </form>
         </div>
     </div>
