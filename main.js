@@ -14,7 +14,7 @@ foodapp.config(function($routeProvider){
     controller:'loginController'
   })
   .when('/home',{
-    templateUrl:'pages/main.html',
+    templateUrl:'pages/home.html',
     controller:'mainController'
   })
 
