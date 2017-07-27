@@ -9,14 +9,19 @@ foodapp.config(function($routeProvider){
   // routeProvider is object used to setup routes or URL
   //routeProvider has function called 'when' which takes two parameter, one is url and second is object
   $routeProvider
-  .when('/',{
+  .when('/',{   //By default this will open( / (slash) means root)
     templateUrl: 'pages/login.html',
     controller:'loginController'
   })
   .when('/home',{
-    templateUrl:'pages/main.html',
+    templateUrl:'pages/home.html',
     controller:'mainController'
   })
+  //id is route parameter and id can take any random value
+  .when('/restaurant/:id', {
+		templateUrl: 'pages/restaurant.html',
+		controller: 'restaurantController'
+	})
 
 })
 //Creating controller for each specific function just like hod for each department
@@ -32,6 +37,7 @@ $scope.restaurants = [{
 	location: 'Jakhan',
 	category: 'Casual Dining, Bar',
 	vote: '4.3',
+  id:'1',
 	cuisines: 'North Indian',
 	cost: '1500',
 	hours: '12 Noon to 11 PM (Mon-Fri)',
@@ -43,6 +49,7 @@ $scope.restaurants = [{
       location: 'Rajpur',
       category: 'Casual Dining',
       vote: '4.5',
+      id:'2',
       cuisines: 'Chinese, Tibetan, Thai',
       cost: '800',
       hours:'12:30 PM to 10 PM (Mon, Wed, Thu, Fri, Sat, Sun)',
@@ -53,6 +60,7 @@ $scope.restaurants = [{
       address: 'Chaudhary Plaza, Rajpur Road, Rajpur, Dehradun',
       location: 'Rajpur',
       category: 'Casual Dining',
+      id:'4',
       vote: '4.3',
       cuisines: 'North Indian, Mediterranean, Asian, Chinese',
       cost: '1600',
@@ -64,6 +72,7 @@ $scope.restaurants = [{
       address: 'Mussourie Diversion, Pacific Hills,Rajpur Road, Rajpur, Dehradun',
       location: 'Rajpur',
       category: 'Cafe',
+      id:'4',
       vote: '4.4',
       cuisines: 'Cafe, Mexican',
       cost: '500',
@@ -75,5 +84,66 @@ $scope.restaurants = [{
 })
 
 // Creating controller for login
-foodapp.controller('loginController',function($scope){
+foodapp.controller('loginController',function($scope,$location){
+
+      //goToHome is property of object $scope of angularjs and it can contain function too just like array and other variables
+      $scope.goToHome = function() {
+        //location is another property of angularjs
+    		$location.url('home')
+    	}
+})
+
+//Creating controller for restaurant
+foodapp.controller('restaurantController',function($scope,$routeParams) {
+	$scope.restaurantId = $routeParams.id;
+	var restaurants = [{
+            	name: 'The Great Indian Pub',
+            	address: '138/345, Rajpur Road, Jakhan, Dehradun',
+            	location: 'Jakhan',
+            	category: 'Casual Dining, Bar',
+            	vote: '4.3',
+            	cuisines: 'North Indian',
+              id:'1',
+            	cost: '1500',
+            	hours: '12 Noon to 11 PM (Mon-Fri)',
+            	image: 'https://www.foodnreview.com/wp-content/uploads/2017/02/index.jpg',
+                },
+                {
+                  name: 'Orchard',
+                  address: '3 D, Dak Patti, Near Mdda Park',
+                  location: 'Rajpur',
+                  category: 'Casual Dining',
+                  vote: '4.5',
+                  cuisines: 'Chinese, Tibetan, Thai',
+                  id:'2',
+                  cost: '800',
+                  hours:'12:30 PM to 10 PM (Mon, Wed, Thu, Fri, Sat, Sun)',
+                  image: 'https://b.zmtcdn.com/data/pictures/8/3500078/e38a0308f2567dcb89113c66eb0b58ce_featured_v2.jpg',
+                },
+                {
+                  name: 'Barbeque Nation',
+                  address: 'Chaudhary Plaza, Rajpur Road, Rajpur, Dehradun',
+                  location: 'Rajpur',
+                  category: 'Casual Dining',
+                  vote: '4.3',
+                  cuisines: 'North Indian, Mediterranean, Asian, Chinese',
+                  id:'3',
+                  cost: '1600',
+                  hours:'12 Noon to 3 PM, 6:30 PM to 11 PM (Mon-Sun)',
+                  image: 'http://www.barbeque-nation.com/storage/app/media/news/images/Casual_dining.png',
+                },
+                {
+                  name: 'Jalapenos',
+                  address: 'Mussourie Diversion, Pacific Hills,Rajpur Road, Rajpur, Dehradun',
+                  location: 'Rajpur',
+                  category: 'Cafe',
+                  vote: '4.4',
+                  cuisines: 'Cafe, Mexican',
+                  id:'4',
+                  cost: '500',
+                  hours:'11 AM to 11 PM (Mon-Sun)',
+                  image: 'https://i1.wp.com/www.iloveuttarakhand.com/wp-content/uploads/2017/03/Screenshot_9-8.png?fit=388%2C542',
+                }
+            ]
+	$scope.restaurant = restaurants[$routeParams.id - 1];
 })
